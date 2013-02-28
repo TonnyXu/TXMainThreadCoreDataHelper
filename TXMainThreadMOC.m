@@ -7,9 +7,7 @@
 
 #import "TXMainThreadMOC.h"
 
-#define DBFileName @"ggtv.sqlite"
-#define momdFolderName @"GGTV.momd"
-#define momFileName @"GGTV.mom"
+#define DBFileName @"<#Set your DB File name like `app.sqlite` here#>"
 
 @interface TXMainThreadMOC()
 
@@ -17,15 +15,15 @@
 @property (nonatomic, retain, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readwrite) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, assign) BOOL needToPrepopulateChannelData;
-
 - (NSURL *)applicationDocumentsDirectory;
+- (void)prepopulateData;
 
 @end
 
 @implementation TXMainThreadMOC
 
 + (TXMainThreadMOC *)sharedInstance{
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
   static TXMainThreadMOC *MOCInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -36,6 +34,7 @@
 }
 
 - (id)init{
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
   self = [super init];
   if (self) {
     [[NSNotificationCenter defaultCenter] 
@@ -55,11 +54,10 @@
 
 //////////////////////////////////////////////////////////////////////////////
 // CoreData properties.
-
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-//
 - (NSManagedObjectContext *)managedObjectContext {
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
   
   if (_managedObjectContext != nil) {
     return _managedObjectContext;
@@ -67,6 +65,7 @@
   
   NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
   if (coordinator != nil) {
+
     /* NOTE By Tonny
      * -------------
      * Aug 9, 2012
@@ -76,90 +75,53 @@
      * make it more easy to understand.
      * 
      */
-
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator: coordinator];
     _managedObjectContext.undoManager = nil;
     _managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
     
-    if (self.needToPrepopulateChannelData) {
-      [self prepopulateChannelData];
-    }
+    [self prepopulateData];
   }
   return _managedObjectContext;
 }
 
+//////////////////////////////////////////////////////////////////////////////
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
-//
 - (NSManagedObjectModel *)managedObjectModel {
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
   
   if (_managedObjectModel != nil) {
     return _managedObjectModel;
   }
 
-
-#ifdef LOGIC_TEST
-  /*
-   NOTE by Tonny
-   -----
-   
-   I ****hate**** Apple!
-   
-   OCTest is complete bullshit!
-   
-   Getting the path for the test bundle is as hard as claim mountain Everest!
-   We will drop the default Unit test framework in the next project. (Not this one.. -_-)
-   
-   Thanks to SO, this post helped: http://stackoverflow.com/questions/3067015/ocunit-nsbundle
-   
-   */
-  NSString *bundlePath = [[NSBundle bundleForClass:[TXMainThreadMOC class]] bundlePath];
-  NSString *momFilePath = [bundlePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@" ,momdFolderName , momFileName]];
-  self.managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:momFilePath]];
-#else
   self.managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-#endif
   
   return _managedObjectModel;
 }
 
+//////////////////////////////////////////////////////////////////////////////
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
   
   if (_persistentStoreCoordinator != nil) {
     return _persistentStoreCoordinator;
   }
   
-#ifdef LOGIC_TEST
-  /* NOTE by Tonny
-   * Jan 29, 2012
-   * 
-   * Because the OCUnit bundle does not works as `[NSBundle mainBundle]` we need
-   * to use `bundleForClass` to get the correct bundle path.
-   */
-  NSString *bundlePath = [[NSBundle bundleForClass:[TXMainThreadMOC class]] bundlePath];
-  NSString *storePath = [bundlePath stringByAppendingPathComponent:DBFileName];
-#else
 	NSString *storePath = [[[self applicationDocumentsDirectory] path] stringByAppendingPathComponent:DBFileName];
-#endif
   
-	// set up the backing store
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	// If the expected store doesn't exist, copy the default store.
 	if (![fileManager fileExistsAtPath:storePath]) {
-    NSLog(@"DB file `%@` is not exist in Document folder.", DBFileName);
 		NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:DBFileName ofType:nil];
 		if (defaultStorePath) {
-      NSLog(@"Exist `%@` in main bundle, copy it to document folder.", DBFileName);
 			[fileManager copyItemAtPath:defaultStorePath toPath:storePath error:NULL];
 		}
-    self.needToPrepopulateChannelData = YES;
 	}
   
 	NSURL *storeUrl = [NSURL fileURLWithPath:storePath];
-  NSLog(@"Store URL: %@", storeUrl);
   
 	NSError *error;
   _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
@@ -174,13 +136,12 @@
     // The schema for the persistent store is incompatible with current managed object model
     // Check the error message to determine what the actual problem was.
     //
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    return nil;
-//		abort();
+		abort();
   }
   return _persistentStoreCoordinator;
 }
 
+//////////////////////////////////////////////////////////////////////////////
 // this is called via observing "NSManagedObjectContextDidSaveNotification" from SubThreadMOC
 - (void)mergeChanges:(NSNotification *)notification {
   DDLog(@"\n * * * * * * * * MOC Notification * * * * * * * * *\n"
@@ -202,6 +163,8 @@
 
 - (void)saveContext
 {
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
+
   NSError *error = nil;
   NSManagedObjectContext *mainMoc = self.managedObjectContext;
   if (mainMoc != nil)
@@ -213,17 +176,21 @@
        
        abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
        */
-      NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    return;
-//      abort();
+      abort();
     }
   }
 }
 
+- (void)prepopulateData{
+  // Add your code here to prepopulate data.
+
+}
 
 
 #ifdef DEBUG
 - (void)deleteStoreFileAndRecreateStore{
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
+
   NSPersistentStore *store = [[self.persistentStoreCoordinator persistentStores] lastObject];
   NSError *error;
   NSURL *storeURL = store.URL;
