@@ -42,11 +42,13 @@ to
 * Access the MOC: `MainThreadMOC.managedObjectContext`
 * Access the managed object model: `MainThreadMOC.managedObjectModel`
 * Create child MOC based on `MainThreadMOC`:     
+
 ```objective-c
 NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 [addingContext setParentContext:[MainThreadMOC managedObjectContext]];
 ```
 * Create a MOC in sub thread:
+
 ```objective-c
 NSManagedObjectContext *subMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
 subMoc.persistentStoreCoordinator = MainThreadMOC.persistentStoreCoordinator;
@@ -271,3 +273,5 @@ index 2e13162..5d2bf10 100644
 See the `CoreDataBooks` project to see the detailed code.
 
 ## Report issues
+
+Go to the [Issues](https://github.com/TonnyXu/TXCoreDataHelper/issues) page, and post your issue and other questions.
