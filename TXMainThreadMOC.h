@@ -21,6 +21,6 @@
 - (void)mergeChanges:(NSNotification *)notification;
 - (void)saveContext;
 
-// for test only. under Release build, it will be turned into an empty function
+// for test only. In release build, it will be turned into an empty function
 - (void)deleteStoreFileAndRecreateStore;
 @end

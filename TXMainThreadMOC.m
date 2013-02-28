@@ -6,8 +6,7 @@
 //
 
 #import "TXMainThreadMOC.h"
-
-#define DBFileName @"<#Set your DB File name like `app.sqlite` here#>"
+#import "TXMainThreadMOC_Definition.h"
 
 @interface TXMainThreadMOC()
 
@@ -24,6 +23,7 @@
 
 + (TXMainThreadMOC *)sharedInstance{
   NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
+  
   static TXMainThreadMOC *MOCInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -35,6 +35,7 @@
 
 - (id)init{
   NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
+  
   self = [super init];
   if (self) {
     [[NSNotificationCenter defaultCenter] 
@@ -144,10 +145,6 @@
 //////////////////////////////////////////////////////////////////////////////
 // this is called via observing "NSManagedObjectContextDidSaveNotification" from SubThreadMOC
 - (void)mergeChanges:(NSNotification *)notification {
-  DDLog(@"\n * * * * * * * * MOC Notification * * * * * * * * *\n"
-        "  notification.object: %p mainMoc: %p\n"
-        "  is on %@ thread \n"
-        " * * * * * * * * MOC Notification * * * * * * * * *\n", notification.object, self.managedObjectContext, [NSThread isMainThread]?@"Main":@"Sub");
 
   dispatch_async(dispatch_get_main_queue(), ^{
     NSManagedObjectContext *mainContext = [self managedObjectContext];
@@ -156,7 +153,6 @@
       return;
     }
     
-    DDLog(@"Merging data from sub thread.");
     [mainContext mergeChangesFromContextDidSaveNotification:notification];
   });
 }
