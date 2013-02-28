@@ -63,7 +63,7 @@
 
 @implementation AddViewController
 
-@synthesize delegate=_delegate, managedObjectContext=_managedObjectContext;
+@synthesize delegate=_delegate, childMoc=_managedObjectContext;
 
 
 #pragma mark -

@@ -69,7 +69,7 @@
 
 @implementation RootViewController
 
-@synthesize fetchedResultsController=_fetchedResultsController, managedObjectContext=_managedObjectContext, rightBarButtonItem=_rightBarButtonItem;
+@synthesize fetchedResultsController=_fetchedResultsController, rightBarButtonItem=_rightBarButtonItem;
 
 
 #pragma mark -
@@ -219,7 +219,7 @@
     
     // Create and configure a fetch request with the Book entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:MainThreadMOC.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Create the sort descriptors array.
@@ -229,7 +229,7 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Create and initialize the fetch results controller.
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"author" cacheName:@"Root"];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:MainThreadMOC.managedObjectContext sectionNameKeyPath:@"author" cacheName:@"Root"];
     _fetchedResultsController.delegate = self;
     
     // Memory management.
@@ -316,11 +316,11 @@
         
         // Create a new managed object context for the new book; set its parent to the fetched results controller's context.
         NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [addingContext setParentContext:[self.fetchedResultsController managedObjectContext]];
+        [addingContext setParentContext:[MainThreadMOC managedObjectContext]];
         
         Book *newBook = (Book *)[NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:addingContext];
         addViewController.book = newBook;
-        addViewController.managedObjectContext = addingContext;
+        addViewController.childMoc = addingContext;
     }
     
     
@@ -349,7 +349,7 @@
          This means that any edits that are made don't affect the application's main managed object context -- it's a way of keeping disjoint edits in a separate scratchpad. Saving changes to that context, though, only push changes to the fetched results controller's context. To save the changes to the persistent store, you have to save the fetch results controller's context as well.
          */        
         NSError *error;
-        NSManagedObjectContext *addingManagedObjectContext = [controller managedObjectContext];
+        NSManagedObjectContext *addingManagedObjectContext = [controller childMoc];
         if (![addingManagedObjectContext save:&error]) {
             /*
              Replace this implementation with code to handle the error appropriately.

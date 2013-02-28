@@ -5,4 +5,8 @@
 //  Copyright 2013 Tonny Xu. All rights reserved.
 //
 
-#define DBFileName @"CoreDataBooks.CDBStore"
+#if (1)
+  #define DBFileName @"CoreDataBooks.CDBStore"
+#else
+  #define DBFileName @"<#Set your DB file's name here, like `myDB.sqlite`#>"
+#endif
