@@ -1,4 +1,4 @@
-# TXCoreDataHelper
+# TXMainThreadCoreDataHelper
 
 It's a simple tool to help you use CoreData in your multithreaded iOS app correctly.
 
@@ -274,4 +274,8 @@ See the `CoreDataBooks` project to see the detailed code.
 
 ## Report issues
 
-Go to the [Issues](https://github.com/TonnyXu/TXCoreDataHelper/issues) page, and post your issue and other questions.
+Go to the [Issues](https://github.com/TonnyXu/TXMainThreadCoreDataHelper/issues) page, and post your issue and other questions.
+
+## LICENSE
+
+Apache License 2.0, see LICENSE-2.0.txt for detail.
