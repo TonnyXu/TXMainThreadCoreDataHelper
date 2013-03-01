@@ -1,0 +1,254 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A6EC251516E08B4000B317E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6EC251416E08B4000B317E3 /* Foundation.framework */; };
+		A6EC252316E08B6200B317E3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6EC252216E08B6200B317E3 /* CoreData.framework */; };
+		A6EC252716E08C2100B317E3 /* TXMainThreadMOC.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EC252516E08C2100B317E3 /* TXMainThreadMOC.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A6EC250F16E08B4000B317E3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A6EC251116E08B4000B317E3 /* libTXMainThreadCoreDataHelper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTXMainThreadCoreDataHelper.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6EC251416E08B4000B317E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A6EC251816E08B4000B317E3 /* TXMainThreadCoreDataHelper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TXMainThreadCoreDataHelper-Prefix.pch"; sourceTree = "<group>"; };
+		A6EC252216E08B6200B317E3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A6EC252416E08C2100B317E3 /* TXMainThreadMOC_Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXMainThreadMOC_Definition.h; sourceTree = SOURCE_ROOT; };
+		A6EC252516E08C2100B317E3 /* TXMainThreadMOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMainThreadMOC.m; sourceTree = SOURCE_ROOT; };
+		A6EC252616E08C2100B317E3 /* TXMainThreadMOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXMainThreadMOC.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A6EC250E16E08B4000B317E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6EC252316E08B6200B317E3 /* CoreData.framework in Frameworks */,
+				A6EC251516E08B4000B317E3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A6EC250816E08B4000B317E3 = {
+			isa = PBXGroup;
+			children = (
+				A6EC252216E08B6200B317E3 /* CoreData.framework */,
+				A6EC251616E08B4000B317E3 /* TXMainThreadCoreDataHelper */,
+				A6EC251316E08B4000B317E3 /* Frameworks */,
+				A6EC251216E08B4000B317E3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A6EC251216E08B4000B317E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A6EC251116E08B4000B317E3 /* libTXMainThreadCoreDataHelper.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A6EC251316E08B4000B317E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A6EC251416E08B4000B317E3 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A6EC251616E08B4000B317E3 /* TXMainThreadCoreDataHelper */ = {
+			isa = PBXGroup;
+			children = (
+				A6EC252416E08C2100B317E3 /* TXMainThreadMOC_Definition.h */,
+				A6EC252516E08C2100B317E3 /* TXMainThreadMOC.m */,
+				A6EC252616E08C2100B317E3 /* TXMainThreadMOC.h */,
+				A6EC251716E08B4000B317E3 /* Supporting Files */,
+			);
+			path = TXMainThreadCoreDataHelper;
+			sourceTree = "<group>";
+		};
+		A6EC251716E08B4000B317E3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A6EC251816E08B4000B317E3 /* TXMainThreadCoreDataHelper-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A6EC251016E08B4000B317E3 /* TXMainThreadCoreDataHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6EC251F16E08B4000B317E3 /* Build configuration list for PBXNativeTarget "TXMainThreadCoreDataHelper" */;
+			buildPhases = (
+				A6EC250D16E08B4000B317E3 /* Sources */,
+				A6EC250E16E08B4000B317E3 /* Frameworks */,
+				A6EC250F16E08B4000B317E3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TXMainThreadCoreDataHelper;
+			productName = TXMainThreadCoreDataHelper;
+			productReference = A6EC251116E08B4000B317E3 /* libTXMainThreadCoreDataHelper.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A6EC250916E08B4000B317E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Tonny Xu";
+			};
+			buildConfigurationList = A6EC250C16E08B4000B317E3 /* Build configuration list for PBXProject "TXMainThreadCoreDataHelper" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A6EC250816E08B4000B317E3;
+			productRefGroup = A6EC251216E08B4000B317E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A6EC251016E08B4000B317E3 /* TXMainThreadCoreDataHelper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A6EC250D16E08B4000B317E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6EC252716E08C2100B317E3 /* TXMainThreadMOC.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A6EC251D16E08B4000B317E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A6EC251E16E08B4000B317E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A6EC252016E08B4000B317E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/TXMainThreadCoreDataHelper.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TXMainThreadCoreDataHelper/TXMainThreadCoreDataHelper-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A6EC252116E08B4000B317E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/TXMainThreadCoreDataHelper.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TXMainThreadCoreDataHelper/TXMainThreadCoreDataHelper-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A6EC250C16E08B4000B317E3 /* Build configuration list for PBXProject "TXMainThreadCoreDataHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6EC251D16E08B4000B317E3 /* Debug */,
+				A6EC251E16E08B4000B317E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6EC251F16E08B4000B317E3 /* Build configuration list for PBXNativeTarget "TXMainThreadCoreDataHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6EC252016E08B4000B317E3 /* Debug */,
+				A6EC252116E08B4000B317E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A6EC250916E08B4000B317E3 /* Project object */;
+}
