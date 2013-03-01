@@ -32,6 +32,7 @@
 		A6EC252416E08C2100B317E3 /* TXMainThreadMOC_Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXMainThreadMOC_Definition.h; sourceTree = SOURCE_ROOT; };
 		A6EC252516E08C2100B317E3 /* TXMainThreadMOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMainThreadMOC.m; sourceTree = SOURCE_ROOT; };
 		A6EC252616E08C2100B317E3 /* TXMainThreadMOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXMainThreadMOC.h; sourceTree = SOURCE_ROOT; };
+		A6EC252816E08E6700B317E3 /* LICENSE-2.0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-2.0.txt"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +51,6 @@
 		A6EC250816E08B4000B317E3 = {
 			isa = PBXGroup;
 			children = (
-				A6EC252216E08B6200B317E3 /* CoreData.framework */,
 				A6EC251616E08B4000B317E3 /* TXMainThreadCoreDataHelper */,
 				A6EC251316E08B4000B317E3 /* Frameworks */,
 				A6EC251216E08B4000B317E3 /* Products */,
@@ -68,6 +68,7 @@
 		A6EC251316E08B4000B317E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6EC252216E08B6200B317E3 /* CoreData.framework */,
 				A6EC251416E08B4000B317E3 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -76,6 +77,7 @@
 		A6EC251616E08B4000B317E3 /* TXMainThreadCoreDataHelper */ = {
 			isa = PBXGroup;
 			children = (
+				A6EC252816E08E6700B317E3 /* LICENSE-2.0.txt */,
 				A6EC252416E08C2100B317E3 /* TXMainThreadMOC_Definition.h */,
 				A6EC252516E08C2100B317E3 /* TXMainThreadMOC.m */,
 				A6EC252616E08C2100B317E3 /* TXMainThreadMOC.h */,
