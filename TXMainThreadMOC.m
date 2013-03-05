@@ -59,9 +59,6 @@
 
 - (void)dealloc{
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-#if !__has_feature(objc_arc)
-  [super dealloc];
-#endif
 }
 
 
@@ -158,15 +155,14 @@
 // this is called via observing "NSManagedObjectContextDidSaveNotification" from SubThreadMOC
 - (void)mergeChanges:(NSNotification *)notification {
 
-  dispatch_async(dispatch_get_main_queue(), ^{
-    NSManagedObjectContext *mainContext = [self managedObjectContext];
-    if ([notification object] == mainContext) {
-      // main context save, no need to perform the merge
-      return;
-    }
-    
-    [mainContext mergeChangesFromContextDidSaveNotification:notification];
-  });
+  if ([notification object] == self.managedObjectContext) {
+    // main context save, no need to perform the merge
+    return;
+  }
+  
+  [self.managedObjectContext performBlock:^{
+    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+  }];
 }
 
 - (void)saveContext
@@ -205,9 +201,6 @@
   NSPersistentStoreCoordinator *storeCoordinator = self.persistentStoreCoordinator;
   [storeCoordinator removePersistentStore:store error:&error];
   [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
-#if !__has_feature(objc_arc)
-  [persistentStoreCoordinator release];
-#endif
   _persistentStoreCoordinator = nil;
   _managedObjectContext = nil;
 }
@@ -222,6 +215,31 @@
 - (NSURL *)applicationDocumentsDirectory
 {
   return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+
+#pragma mark - SubMoc/ChildMoc helper
+- (NSManagedObjectContext *)spawnSubMoc{
+  NSAssert(![NSThread isMainThread], @"%s should be run on a sub thread", __FUNCTION__);
+  NSManagedObjectContext *subMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+  subMoc.persistentStoreCoordinator = self.persistentStoreCoordinator;
+  subMoc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+  
+  return subMoc;
+}
+- (NSManagedObjectContext *)spawnMainThreadChildMoc{
+  NSAssert([NSThread isMainThread], @"%s should be run on the main thread", __FUNCTION__);
+  NSManagedObjectContext *childMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+  [childMoc setParentContext:self.managedObjectContext];
+  
+  return childMoc;
+}
+- (NSManagedObjectContext *)spawnSubThreadChildMoc{
+  NSAssert(![NSThread isMainThread], @"%s should be run on a sub thread", __FUNCTION__);
+  NSManagedObjectContext *childMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+  [childMoc setParentContext:self.managedObjectContext];
+  
+  return childMoc;
 }
 
 @end

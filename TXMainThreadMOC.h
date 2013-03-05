@@ -30,6 +30,10 @@
 - (void)mergeChanges:(NSNotification *)notification;
 - (void)saveContext;
 
+- (NSManagedObjectContext *)spawnSubMoc;
+- (NSManagedObjectContext *)spawnMainThreadChildMoc;
+- (NSManagedObjectContext *)spawnSubThreadChildMoc;
+
 // for test only. In release build, it will be turned into an empty function
 - (void)deleteStoreFileAndRecreateStore;
 @end
